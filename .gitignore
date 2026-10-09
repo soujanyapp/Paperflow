@@ -1,0 +1,31 @@
+# Environment
+.env
+.env.*
+!.env.example
+.agents
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/coverage/
+frontend/playwright-report/
+frontend/test-results/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Local storage (uploaded assets, generated PDFs)
+storage/
+!storage/.gitkeep
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.log

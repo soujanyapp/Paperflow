@@ -1,0 +1,228 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #f5f5f2;
+  --foreground: #17181c;
+  --card: #ffffff;
+  --card-foreground: #17181c;
+  --popover: #ffffff;
+  --popover-foreground: #17181c;
+  --primary: #2547d0;
+  --primary-foreground: #ffffff;
+  --secondary: #ecebe6;
+  --secondary-foreground: #2a2b30;
+  --muted: #efeeea;
+  --muted-foreground: #6b6e76;
+  --accent: #e8eefc;
+  --accent-foreground: #1e3aa8;
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
+  --success: #2f9e68;
+  --warning: #c2740a;
+  --border: #e2e1db;
+  --input: #e2e1db;
+  --ring: #2547d0;
+  --paper: #ffffff;
+  --ink: #1a1b20;
+  --canvas: #e6e5e0;
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: #131417;
+  --foreground: #ececef;
+  --card: #1a1b1f;
+  --card-foreground: #ececef;
+  --popover: #1c1d22;
+  --popover-foreground: #ececef;
+  --primary: #6d86f5;
+  --primary-foreground: #0d1020;
+  --secondary: #24252b;
+  --secondary-foreground: #e6e6ea;
+  --muted: #232429;
+  --muted-foreground: #9a9caa;
+  --accent: #232a44;
+  --accent-foreground: #b9c5f7;
+  --destructive: #f2585d;
+  --destructive-foreground: #1a0d0e;
+  --success: #4cc38a;
+  --warning: #e0a63e;
+  --border: #2b2c33;
+  --input: #2b2c33;
+  --ring: #6d86f5;
+  --paper: #fbfbf8;
+  --ink: #1a1b20;
+  --canvas: #0e0f12;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-canvas: var(--canvas);
+
+  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Source Serif 4", ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv05", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 1px;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 22%, transparent);
+  }
+}
+
+/* ---- Document canvas primitives (shared with export renderer) ---- */
+.pf-page {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow:
+    0 1px 2px rgba(20, 20, 25, 0.08),
+    0 8px 30px -10px rgba(20, 20, 25, 0.22);
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-serif);
+  color-scheme: light;
+}
+.pf-page-content {
+  position: absolute;
+  inset: 0;
+}
+.pf-block {
+  position: relative;
+}
+.pf-block[data-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 1.5px solid var(--primary);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.pf-block[data-selected="true"][data-editing="true"]::after {
+  border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+}
+.pf-block:hover:not([data-selected="true"])::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 1px dashed color-mix(in srgb, var(--primary) 45%, transparent);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.pf-doc {
+  font-family: var(--font-serif);
+  line-height: 1.55;
+  color: var(--ink);
+}
+.pf-doc h1,
+.pf-doc h2,
+.pf-doc h3,
+.pf-doc h4 {
+  font-family: var(--font-serif);
+  line-height: 1.2;
+  margin: 0 0 0.4em;
+  font-weight: 600;
+}
+.pf-doc h1 {
+  font-size: 2em;
+}
+.pf-doc h2 {
+  font-size: 1.5em;
+}
+.pf-doc h3 {
+  font-size: 1.2em;
+}
+.pf-doc p {
+  margin: 0 0 0.65em;
+}
+.pf-doc ul,
+.pf-doc ol {
+  margin: 0 0 0.65em;
+  padding-left: 1.5em;
+}
+.pf-doc ul {
+  list-style: disc;
+}
+.pf-doc ol {
+  list-style: decimal;
+}
+.pf-doc a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.pf-doc img {
+  max-width: 100%;
+}
+.pf-doc blockquote {
+  border-left: 3px solid var(--border);
+  margin: 0 0 0.65em;
+  padding-left: 1em;
+  color: var(--muted-foreground);
+}
+
+/* Tiptap / ProseMirror base */
+.ProseMirror {
+  outline: none;
+}
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--ink) 35%, transparent);
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+}
